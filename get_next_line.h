@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 18:50:03 by ybourais          #+#    #+#             */
-/*   Updated: 2023/02/11 14:52:16 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/02/17 15:46:25 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# elif (BUFFER_SIZE < 0)
-#  undef BUFFER_SIZE
-#  define BUFFER_SIZE 0
+#  define BUFFER_SIZE 310
 # endif
 
 # include <unistd.h>

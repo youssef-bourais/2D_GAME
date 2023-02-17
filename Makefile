@@ -6,17 +6,17 @@
 #    By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/13 18:09:35 by ybourais          #+#    #+#              #
-#    Updated: 2023/02/13 18:23:39 by ybourais         ###   ########.fr        #
+#    Updated: 2023/02/17 17:16:47 by ybourais         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 
-SRCS = image.c get_next_line.c get_next_line_utils.c cheak_map.c \
+SRCS = so_long.c get_next_line.c get_next_line_utils.c cheak_map.c so_long_utils.c graphics.c\
 
-CC = gcc
+CC = cc
 
-CFLAGS = -Wall -Werror -Wextra
+# CFLAGS = -Wall -Werror -Wextra
 
 OBJS = ${SRCS:.c=.o}
 

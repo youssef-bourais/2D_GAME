@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 08:05:48 by ybourais          #+#    #+#             */
-/*   Updated: 2023/02/13 18:06:48 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:46:06 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int cheak_rect(char **map, int p)
 	int n;
 	k = ft_len(map[p - 1]);
 	j = ft_len(map[0]);
-	n = ft_chrch(map[p - 1], '\n');
+	n = ft_chrch(map[p - 1], '\n'); // 1 or 0
 	while (i < p)
 	{
 		if (j == ft_len(map[i]))
@@ -138,4 +138,12 @@ int valid_path(char **map, int p, int p1, int p2)
 		i ++;
 	}
 	return 1;
+}
+int check_valid_map(char **map, char **visited, int p, int *e1, int *e2, int *p1, int *p2)
+{
+    if (cheak_c(map, p) == 1 && cheak_rect(map, p) == 1 && ft_wall(map, p) == 1 && cheak_other(map, p, 'E', e1, e2) == 1
+        && cheak_other(map, p, 'P', p1, p2) == 1 && valid_path(visited, p, *p1, *p2) == 1)
+        return 1;
+    else
+        return 0;
 }
