@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 18:49:15 by ybourais          #+#    #+#             */
-/*   Updated: 2023/02/11 17:51:38 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/02/18 21:08:00 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	ft_chrch(char *str, int n)
 	int	i;
 
 	i = 0;
+	if (n != 'E' && n != 'P' && n != '0' && n != '1' && n != 'C')
+		return (0);
 	while (str[i] != '\0')
 	{
 		if (str[i] == n)

@@ -6,76 +6,123 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 09:44:43 by ybourais          #+#    #+#             */
-/*   Updated: 2023/02/17 17:48:34 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/02/18 22:24:32 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include "so_long.h"
 
-char **read_map(int fd ,int *p)
+char	**read_map(int fd, int *p)
 {
-	char *line;
-	char **tab;
-	int i = 0;
+	char	*line;
+	char	**tab;
+	int		i;
 
+	i = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
+		free(line);
 		if (line == NULL)
-			break;
-		i ++;
+			break ;
+		i++;
 	}
 	close(fd);
-	tab = (char **)malloc(sizeof(char *)*(i));
+	tab = (char **)malloc(sizeof(char *) * (i));
+	if (!tab)
+		return (NULL);
 	fd = open("maps/map.ber", O_RDONLY);
 	*p = i;
-	int j;
-	j = i;
 	i = 0;
-	while (i < j)
-	{
-		tab[i] = get_next_line(fd);
-		i ++;
-	}
+	while (i < *p)
+		tab[i++] = get_next_line(fd);
 	close(fd);
-	return tab;
+	return (tab);
 }
 
-void implement_map(t_vars *start)
+void	ft_image_condition(t_vars *start, int i, int j)
 {
-	int i;
-	int j;
+	if (start->map[i][j] == '1')
+		mlx_put_image_to_window(start->mlx, start->win, start->img_w, j
+			* start->size, i * start->size);
+	else if (start->map[i][j] == '0')
+		mlx_put_image_to_window(start->mlx, start->win, start->img_g, j
+			* start->size, i * start->size);
+	else if (start->map[i][j] == 'C')
+		mlx_put_image_to_window(start->mlx, start->win, start->img_c, j
+			* start->size, i * start->size);
+	else if (start->map[i][j] == 'E')
+		mlx_put_image_to_window(start->mlx, start->win, start->img_e, j
+			* start->size, i * start->size);
+	else if (start->map[i][j] == 'P')
+		mlx_put_image_to_window(start->mlx, start->win, start->img_p, j
+			* start->size, i * start->size);
+	else if (start->map[i][j] == 'X')
+		mlx_put_image_to_window(start->mlx, start->win, start->img_d, j
+			* start->size, i * start->size);
+}
+
+void	ft_put_image(t_vars *start)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < start->p)
+	{
+		j = 0;
+		while (j < ft_len(start->map[0]) - 1)
+		{
+			ft_image_condition(start, i, j);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	implement_map(t_vars *start)
+{
+	static int	b;
 
 	ft_image(start);
-	static int b;
+	if ((ft_len(start->map[0]) - 1) * (start->size) > sizex || ((start->p)
+			* (start->size) > sizey))
+		ft_error(start);
 	if (b == 0)
 	{
-    	start->win = mlx_new_window(start->mlx, (ft_len(start->map[0]) - 1)*(start->size), (start->p)*(start->size), "HUNTER_X_HUNTER");
-		b ++;
+		start->win = mlx_new_window(start->mlx, (ft_len(start->map[0]) - 1)
+				* (start->size), (start->p) * (start->size), "HUNTER_X_HUNTER");
+		b++;
 	}
 	ft_put_image(start);
-    mlx_key_hook(start->win, &key_hook, start);
-	mlx_hook(start->win, 17, 0, &ft_close, 0);
+	mlx_key_hook(start->win, &key_hook, start);
+	mlx_hook(start->win, 17, 0, &ft_close, start);
 }
 
 int	main(void)
 {
-	t_vars start;
+	t_vars	start;
+	char	**visited;
+
 	start.mlx = mlx_init();
 	start.fd = open("maps/map.ber", O_RDONLY);
 	start.map = read_map(start.fd, &start.p);
-
-	char **visited;
-	visited = (char **)malloc(sizeof(char *)*start.p);
+	visited = (char **)malloc(sizeof(char *) * start.p);
+	if (!visited)
+		return (0);
+	if (start.fd < 0)
+		ft_error(&start);
 	ft_copie_table(visited, start.map, start.p);
-	if (check_valid_map(start.map, visited, start.p, &(start.e1), &(start.e2), &(start.p1), &(start.p2)) == 1)
+	if (check_valid_map(start.map, visited, start.p, &(start.e1), &(start.e2),
+			&(start.p1), &(start.p2)) == 1)
 	{
-		printf("valid map\n");
 		implement_map(&start);
+		write(1, "valid map\n", 9);
 		ft_free_table(visited, start.p);
 	}
 	else
-		ft_error();
+		ft_error(&start);
 	mlx_loop(start.mlx);
+	return (0);
 }
