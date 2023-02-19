@@ -6,17 +6,17 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 22:34:14 by ybourais          #+#    #+#             */
-/*   Updated: 2023/02/18 22:40:27 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/02/19 09:46:23 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int cheak_other_2(char **map, int p, int *x, int *y)
+int	cheak_other_2(char **map, int p, int *x, int *y)
 {
-	int i;
-	int count;
-	int j;
+	int		i;
+	int		count;
+	int		j;
 
 	i = 0;
 	count = 0;
@@ -29,12 +29,12 @@ int cheak_other_2(char **map, int p, int *x, int *y)
 			{
 				*x = i;
 				*y = j;
-				j ++;
-				count ++;
+				j++;
+				count++;
 			}
-			j ++;
+			j++;
 		}
-		i ++;
+		i++;
 	}
-	return count;
+	return (count);
 }

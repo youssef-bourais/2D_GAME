@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 09:44:43 by ybourais          #+#    #+#             */
-/*   Updated: 2023/02/18 22:24:32 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/02/19 10:05:56 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ void	implement_map(t_vars *start)
 	static int	b;
 
 	ft_image(start);
-	if ((ft_len(start->map[0]) - 1) * (start->size) > sizex || ((start->p)
-			* (start->size) > sizey))
+	if ((ft_len(start->map[0]) - 1) * (start->size) > SIZEX || ((start->p)
+			* (start->size) > SIZEY))
 		ft_error(start);
 	if (b == 0)
 	{
@@ -114,8 +114,9 @@ int	main(void)
 	if (start.fd < 0)
 		ft_error(&start);
 	ft_copie_table(visited, start.map, start.p);
-	if (check_valid_map(start.map, visited, start.p, &(start.e1), &(start.e2),
-			&(start.p1), &(start.p2)) == 1)
+	if (check_valid_map(start.map, start.p, &(start.p1), &(start.p2)) == 1
+		&& cheak_other_1(start.map, start.p, &(start.e1), &(start.e2)) == 1
+		&& valid_path(visited, start.p, start.p1, start.p2) == 1)
 	{
 		implement_map(&start);
 		write(1, "valid map\n", 9);
