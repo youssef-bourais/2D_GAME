@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 09:44:43 by ybourais          #+#    #+#             */
-/*   Updated: 2023/02/19 10:05:56 by ybourais         ###   ########.fr       */
+/*   Updated: 2024/09/12 07:34:55 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,7 @@ void	implement_map(t_vars *start)
 		b++;
 	}
 	ft_put_image(start);
-	mlx_key_hook(start->win, &key_hook, start);
-	mlx_hook(start->win, 17, 0, &ft_close, start);
-}
+	}
 
 int	main(void)
 {
@@ -119,6 +117,8 @@ int	main(void)
 		&& valid_path(visited, start.p, start.p1, start.p2) == 1)
 	{
 		implement_map(&start);
+        mlx_key_hook(start->win, &key_hook, start);
+	    mlx_hook(start->win, 17, 0, &ft_close, start);
 		write(1, "valid map\n", 9);
 		ft_free_table(visited, start.p);
 	}
